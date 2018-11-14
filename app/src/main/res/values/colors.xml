@@ -7,7 +7,7 @@
     <color name="hint">#22000000</color>
     <color name="hint2">#FFDCDCDC</color>
 
-
+    <color name="login_et">#00A1E9</color>
     <color name="white">#ffffffff</color>
 
     <color name="bg_title">#FF3B77D1</color>
@@ -19,6 +19,7 @@
     <color name="bg_note">#FF6DAA33</color>
     <color name="text1">#949494</color>
     <color name="text2">#FFBB0017</color>
+    <color name="btn_login">#CC8823</color>
 
 
     <color name="text3">#FF45D4C8</color>

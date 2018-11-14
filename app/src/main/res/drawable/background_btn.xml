@@ -7,9 +7,9 @@
         android:topLeftRadius="@dimen/radius"
         android:topRightRadius="@dimen/radius" />
 
-    <solid android:color="@color/colorAccent"></solid>
+    <solid android:color="@color/btn_login"></solid>
     <stroke
         android:width="0dp"
-        android:color="@color/colorAccent" />
+        android:color="@color/btn_login" />
 
 </shape>
