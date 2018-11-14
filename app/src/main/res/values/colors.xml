@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF1F2362</color>
+    <color name="colorPrimaryDark">#FF1F2362</color>
+    <color name="colorAccent">#FF1F2362</color>
+
+    <color name="hint">#22000000</color>
+    <color name="hint2">#FFDCDCDC</color>
+
+
+    <color name="white">#ffffffff</color>
+
+    <color name="bg_title">#FF3B77D1</color>
+    <color name="bg_text">#FF1F2362</color>
+    <color name="bg_main">#FFDCDCDC</color>
+
+    <color name="bg_camera">#FFB24E49</color>
+
+    <color name="bg_note">#FF6DAA33</color>
+    <color name="text1">#949494</color>
+    <color name="text2">#FFBB0017</color>
+
+
+    <color name="text3">#FF45D4C8</color>
+
+
+</resources>

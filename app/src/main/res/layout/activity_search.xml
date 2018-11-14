@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".activity.SearchActivity">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:id="@+id/iv_toolsbar_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/toolbar_back"/>
+
+        <LinearLayout
+                android:paddingBottom="8dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="125dp"
+                android:layout_above="@+id/ll_camera"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/background_btn2"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:id="@+id/ll_title"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:background="@drawable/background_title4"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:layout_height="48dp">
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_height="match_parent">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="45dp"
+                            android:gravity="center"
+                            android:text="姓名"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/white"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="45dp"
+                            android:gravity="center"
+                            android:text="相似度"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/white"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="45dp"
+                            android:gravity="center"
+                            android:text="照片"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/white"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_height="match_parent">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="45dp"
+                            android:gravity="center"
+                            android:text="姓名"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/white"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="45dp"
+                            android:gravity="center"
+                            android:text="相似度"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/white"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="45dp"
+                            android:gravity="center"
+                            android:text="照片"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/white"/>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/hint"/>
+
+            <LinearLayout
+                    android:id="@+id/content"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_failed"
+
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <LinearLayout
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <ImageView
+                                android:layout_marginLeft="4dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@mipmap/ic_jg"/>
+
+                        <TextView
+                                android:layout_marginLeft="4dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text2"
+                                android:text="无此人信息"/>
+                    </LinearLayout>
+
+                    <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/hint"/>
+
+                </LinearLayout>
+
+
+                <GridView
+                        android:id="@+id/gridView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:listSelector="@android:color/transparent"
+                        android:numColumns="2"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:visibility="gone"
+                android:layout_margin="20dp"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/ll_camera"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:gravity="center"
+                android:background="@drawable/background_btn3"
+                android:orientation="horizontal">
+
+            <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/camera"/>
+
+            <TextView
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="重新拍照"/>
+        </LinearLayout>
+
+
+        <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+        />
+    </RelativeLayout>
+
+
+</LinearLayout>

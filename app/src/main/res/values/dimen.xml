@@ -1,0 +1,26 @@
+<resources>
+
+    <dimen name="radius">6dp</dimen>
+
+    <!--<dimen name="activity_horizontal_margin">16dp</dimen>-->
+    <!--<dimen name="activity_vertical_margin">16dp</dimen>-->
+
+    <!--<dimen name="toolbar_title">18sp</dimen>-->
+    <!--<dimen name="toolbar_btn">14sp</dimen>-->
+
+    <!--<dimen name="text_edittext">14sp</dimen>-->
+    <!--<dimen name="text_button">14sp</dimen>-->
+
+    <dimen name="text_select">14sp</dimen>
+    <dimen name="heigh_select">44dp</dimen>
+
+    <!--<dimen name="text_textview1">12sp</dimen>-->
+    <!--<dimen name="text_textview2">14sp</dimen>-->
+
+    <!--<dimen name="heigh_edittext">40dp</dimen>-->
+    <!--<dimen name="heigh_button">40dp</dimen>-->
+
+    <!--<dimen name="gudieview_width">6dp</dimen>-->
+    <!--<dimen name="gudieview_heigh">6dp</dimen>-->
+
+</resources>

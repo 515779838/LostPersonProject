@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.ConfirmPersonActivity">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:id="@+id/iv_toolsbar_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/toolbar_back"/>
+
+
+        <LinearLayout
+                android:id="@+id/ll_main"
+                android:paddingBottom="8dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="80dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/background_btn2"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/background_title3"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:visibility="visible"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/hint"/>
+
+            <LinearLayout
+                    android:id="@+id/content"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+            >
+
+                <com.android.lostpersonproject.view.VerticalScrollView
+                        android:layout_width="match_parent"
+                        android:scrollbars="none"
+                        android:layout_height="match_parent">
+
+                    <LinearLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+                        <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="姓名："
+                                    android:textColor="@color/bg_text"/>
+
+                            <TextView
+                                    android:layout_marginLeft="4dp"
+
+
+                                    android:id="@+id/tv_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="赵某某"
+                                    android:textColor="@color/text2"/>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="本人电话："
+                                    android:textColor="@color/bg_text"/>
+
+                            <TextView
+                                    android:layout_marginLeft="4dp"
+
+
+                                    android:id="@+id/tv_phone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="1800388XXXX"
+                                    android:textColor="@color/text2"/>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="身份证号："
+                                    android:textColor="@color/bg_text"/>
+
+                            <TextView
+                                    android:layout_marginLeft="4dp"
+                                    android:id="@+id/tv_cardNum"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="22010219771222XXXX"
+                                    android:textColor="@color/bg_text"/>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="住址："
+                                    android:textColor="@color/bg_text"/>
+
+                            <TextView
+                                    android:layout_marginLeft="4dp"
+                                    android:id="@+id/tv_address"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="辽宁省抚顺市XX路XX街XX号"
+                                    android:textColor="@color/text2"/>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="监护人1："
+                                    android:textColor="@color/bg_text"/>
+
+                            <TextView
+                                    android:layout_marginLeft="4dp"
+                                    android:id="@+id/tv_jhr1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="王某"
+                                    android:textColor="@color/text2"/>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="与此人关系："
+                                    android:textColor="@color/bg_text"/>
+
+                            <TextView
+                                    android:layout_marginLeft="4dp"
+
+                                    android:id="@+id/tv_relationship"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="母女"
+                                    android:textColor="@color/text2"/>
+                        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+                    </LinearLayout>
+                </com.android.lostpersonproject.view.VerticalScrollView>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_margin="20dp"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/ll_confirm"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:gravity="center"
+                android:background="@drawable/background_btn5"
+                android:orientation="horizontal"
+        >
+
+            <ImageView
+                    android:visibility="gone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/camera"/>
+
+            <TextView
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="确认"/>
+        </LinearLayout>
+
+
+        <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+        />
+    </RelativeLayout>
+
+
+</LinearLayout>
