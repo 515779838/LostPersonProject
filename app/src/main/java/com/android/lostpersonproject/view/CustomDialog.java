@@ -34,9 +34,7 @@ public class CustomDialog extends Dialog {
 
     public static class Builder {
         private Context context;
-
-        private DialogInterface.OnClickListener closeClickListener;
-
+        private boolean isCancle = false;
         private View contentView;
 
         public Builder(Context context) {
@@ -48,13 +46,10 @@ public class CustomDialog extends Dialog {
             return this;
         }
 
-        public Builder setCloseButton(
-                DialogInterface.OnClickListener listener) {
-
-            this.closeClickListener = listener;
+        public Builder setCancle(boolean isCancle) {
+            this.isCancle = isCancle;
             return this;
         }
-
 
         public CustomDialog create() {
             LayoutInflater inflater = (LayoutInflater) context
@@ -64,17 +59,6 @@ public class CustomDialog extends Dialog {
             View layout = inflater.inflate(R.layout.dialog_normal_layout, null);
             dialog.addContentView(layout, new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-
-            if (closeClickListener != null) {
-                ((ImageView) layout.findViewById(R.id.iv_close))
-                        .setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View v) {
-                                closeClickListener.onClick(dialog,
-                                        DialogInterface.BUTTON_POSITIVE);
-                            }
-                        });
-            }
-
 
             if (contentView != null) {
                 // if no message set
@@ -87,7 +71,9 @@ public class CustomDialog extends Dialog {
                 layout.findViewById(R.id.fl).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.dismiss();
+                        if(isCancle){
+                            dialog.dismiss();
+                        }
                     }
                 });
             }

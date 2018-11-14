@@ -8,6 +8,9 @@ import com.android.lostpersonproject.base.BaseActivity
 import com.android.lostpersonproject.bean.LoggingBean
 import kotlinx.android.synthetic.main.activity_logging.*
 
+/**
+ * 工作记录
+ */
 class LoggingActivity : BaseActivity() {
 
     private var beans:ArrayList<LoggingBean>? = null

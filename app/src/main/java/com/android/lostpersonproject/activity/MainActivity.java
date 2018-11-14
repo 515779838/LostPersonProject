@@ -11,10 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.android.lostpersonproject.R;
+import com.android.lostpersonproject.base.BaseActivity;
 
 import java.io.File;
 
-public class Main2Activity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private String sdPath;//SD卡的路径
     private String picPath;//图片存储路径
@@ -48,23 +49,17 @@ public class Main2Activity extends AppCompatActivity {
                 //为拍摄的图片指定一个存储的路径
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(cameraIntent, 0);
-
-//                Intent intent = new Intent(Main2Activity.this,SearchActivity.class);
-//                startActivity(intent);
             }
         });
 
         ll_note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(Main2Activity.this,LoggingActivity.class);
+                Intent intent = new Intent(MainActivity.this,LoggingActivity.class);
                 startActivity(intent);
             }
         });
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -74,7 +69,7 @@ public class Main2Activity extends AppCompatActivity {
 
             if (requestCode == 0) {
 
-                Intent intent = new Intent(Main2Activity.this,SearchActivity.class);
+                Intent intent = new Intent(MainActivity.this,SearchActivity.class);
                 intent.putExtra("picPath",picPath);
                 startActivity(intent);
 //

@@ -20,6 +20,9 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_person_detail.*
 import java.util.*
 
+/**
+ * 人员详情
+ */
 class PersonDetailActivity : BaseActivity() {
 
     private var bean: LoggingBean? = null
@@ -82,7 +85,7 @@ class PersonDetailActivity : BaseActivity() {
             var dialog: CustomDialog? = null
             builder = CustomDialog.Builder(this@PersonDetailActivity)
             builder!!.setContentView(view)
-
+            builder!!.setCancle(true)
             var image = view.findViewById<View>(R.id.image) as ImageView
 
             var ll_close = view.findViewById<View>(R.id.ll_close) as LinearLayout

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -37,6 +38,11 @@ class SearchActivity : BaseActivity() {
     }
 
     private fun initView() {
+//        //上传文件（图片）时 先睡一会在上传
+//        Handler().postDelayed({
+//
+//
+//        }, 500)
          picPath = intent.getStringExtra("picPath")
 
         /**

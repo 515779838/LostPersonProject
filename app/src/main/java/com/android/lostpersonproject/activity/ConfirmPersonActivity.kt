@@ -3,12 +3,16 @@ package com.android.lostpersonproject.activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.android.lostpersonproject.R
+import com.android.lostpersonproject.base.BaseActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_confirm_person.*
 
-class ConfirmPersonActivity : AppCompatActivity() {
+/**
+ * 人员确认
+ */
+class ConfirmPersonActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
