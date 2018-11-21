@@ -1,5 +1,6 @@
 package com.android.lostpersonproject.activity
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -19,6 +20,8 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_person_detail.*
 import java.util.*
+
+
 
 /**
  * 人员详情
@@ -40,10 +43,19 @@ class PersonDetailActivity : BaseActivity() {
 
     private fun initView() {
         iv_toolsbar_back.setOnClickListener {
+            hideSoftInput()
             finish()
         }
 
         bean = intent.getSerializableExtra("bean") as LoggingBean?
+
+//        ll_confirm.visibility = View.GONE
+//        var parmas = ll_main.layoutParams as LinearLayout.LayoutParams
+//        parmas.setMargins(dp2px(20f),dp2px(80f),dp2px(20f),dp2px(20f))
+
+        ll_confirm.setOnClickListener {
+            finish()
+        }
 
         setData()
     }

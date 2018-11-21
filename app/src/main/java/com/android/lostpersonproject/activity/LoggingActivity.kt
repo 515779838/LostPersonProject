@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_logging.*
  */
 class LoggingActivity : BaseActivity() {
 
-    private var beans:ArrayList<LoggingBean>? = null
+    private var beans = ArrayList<LoggingBean>()
 private var mAdapter:LoggingAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,33 +28,57 @@ private var mAdapter:LoggingAdapter? = null
         tv1.text = "1"
         tv2.text = "2"
 
-        setData()
+        setData("1")
     }
 
-    private fun setData() {
-        beans = ArrayList()
+    private fun setData(type:String) {
+        beans.clear()
 
-        var bean1 = LoggingBean("1","赵某某","XX街道XX社区XX小区","")
-        var bean2 = LoggingBean("2","张某某","XX街道XX社区XX小区","")
-        var bean3 = LoggingBean("3","王某某","XX街道XX社区XX小区","")
-        var bean4 = LoggingBean("4","钱某某","XX街道XX社区XX小区","")
-        var bean5 = LoggingBean("5","赵某某","XX街道XX社区XX小区","")
-        var bean6 = LoggingBean("6","周某某","XX街道XX社区XX小区","")
-        var bean7 = LoggingBean("7","吴某某","XX街道XX社区XX小区","")
-        var bean8 = LoggingBean("8","郑某某","XX街道XX社区XX小区","")
-        var bean9 = LoggingBean("9","冯某某","XX街道XX社区XX小区","")
-        var bean10 = LoggingBean("10","鲁某某","XX街道XX社区XX小区","")
+        if (type == "1"){
+            var bean1 = LoggingBean("1","赵某某","XX街道XX社区XX小区","")
+            var bean2 = LoggingBean("2","张某某","XX街道XX社区XX小区","")
+            var bean3 = LoggingBean("3","王某某","XX街道XX社区XX小区","")
+            var bean4 = LoggingBean("4","钱某某","XX街道XX社区XX小区","")
+            var bean5 = LoggingBean("5","赵某某","XX街道XX社区XX小区","")
+            var bean6 = LoggingBean("6","周某某","XX街道XX社区XX小区","")
+            var bean7 = LoggingBean("7","吴某某","XX街道XX社区XX小区","")
+            var bean8 = LoggingBean("8","郑某某","XX街道XX社区XX小区","")
+            var bean9 = LoggingBean("9","冯某某","XX街道XX社区XX小区","")
+            var bean10 = LoggingBean("10","鲁某某","XX街道XX社区XX小区","")
 
-        beans!!.add(bean1)
-        beans!!.add(bean2)
-        beans!!.add(bean3)
-        beans!!.add(bean4)
-        beans!!.add(bean5)
-        beans!!.add(bean6)
-        beans!!.add(bean7)
-        beans!!.add(bean8)
-        beans!!.add(bean9)
-        beans!!.add(bean10)
+            beans!!.add(bean1)
+            beans!!.add(bean2)
+            beans!!.add(bean3)
+            beans!!.add(bean4)
+            beans!!.add(bean5)
+            beans!!.add(bean6)
+            beans!!.add(bean7)
+            beans!!.add(bean8)
+            beans!!.add(bean9)
+            beans!!.add(bean10)
+        }else{
+            var bean1 = LoggingBean("1","陆某某","XX街道XX社区XX小区","")
+            var bean2 = LoggingBean("2","李某某","XX街道XX社区XX小区","")
+            var bean3 = LoggingBean("3","曹某","XX街道XX社区XX小区","")
+            var bean4 = LoggingBean("4","常某某","XX街道XX社区XX小区","")
+            var bean5 = LoggingBean("5","王某某","XX街道XX社区XX小区","")
+            var bean6 = LoggingBean("6","李某某","XX街道XX社区XX小区","")
+            var bean7 = LoggingBean("7","钟某","XX街道XX社区XX小区","")
+            var bean8 = LoggingBean("8","赵某某","XX街道XX社区XX小区","")
+            var bean9 = LoggingBean("9","钱某某","XX街道XX社区XX小区","")
+            var bean10 = LoggingBean("10","孙某某","XX街道XX社区XX小区","")
+
+            beans!!.add(bean1)
+            beans!!.add(bean2)
+            beans!!.add(bean3)
+            beans!!.add(bean4)
+            beans!!.add(bean5)
+            beans!!.add(bean6)
+            beans!!.add(bean7)
+            beans!!.add(bean8)
+            beans!!.add(bean9)
+            beans!!.add(bean10)
+        }
 
         mAdapter = LoggingAdapter(beans!!,LoggingActivity@this)
         listView.adapter = mAdapter
@@ -74,6 +98,9 @@ private var mAdapter:LoggingAdapter? = null
             tv1.text = "1"
             tv2.text = "2"
 
+          setData("1")
+
+
         }
         ll_2.setOnClickListener {
             ll_2.setBackgroundResource(R.drawable.background_btn3)
@@ -81,6 +108,9 @@ private var mAdapter:LoggingAdapter? = null
 
             tv1.text = "1"
             tv2.text = "2"
+
+            setData("2")
+
         }
     }
 }

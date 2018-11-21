@@ -52,8 +52,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".activity.PersonDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:screenOrientation="portrait" />
 
         <activity android:name=".activity.ConfirmPersonActivity"
             android:screenOrientation="portrait"
