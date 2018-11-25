@@ -9,8 +9,11 @@ import com.android.lostpersonproject.tool.NetTools.net
 import com.android.lostpersonproject.url.Urls
 import kotlinx.android.synthetic.main.activity_login.*
 
+/**
+ * 登录
+ */
 class LoginActivity : BaseActivity() , View.OnClickListener {
-    //
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
