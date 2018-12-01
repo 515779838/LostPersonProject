@@ -11,26 +11,35 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import com.android.lostpersonproject.R
 import com.android.lostpersonproject.adapter.SearchAdapter
 import com.android.lostpersonproject.base.BaseActivity
 import com.android.lostpersonproject.bean.SearchBean
+import com.android.lostpersonproject.constant.Constant
+import com.android.lostpersonproject.tool.NetTools
+import com.android.lostpersonproject.tool.NetTools.netFile
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_search.*
+import top.zibin.luban.Luban
+import top.zibin.luban.OnCompressListener
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
+import java.util.HashMap
 
 class SearchActivity : BaseActivity() {
 
-
-    private var sdPath = ""
     private var picPath = ""
-    private var beans:ArrayList<SearchBean>? = null
-    private var mAdapter:SearchAdapter? = null
+    private var imageName = ""
+    private var mAdapter: SearchAdapter? = null
+
+    private var mUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -38,142 +47,152 @@ class SearchActivity : BaseActivity() {
     }
 
     private fun initView() {
-//        //上传文件（图片）时 先睡一会在上传
-//        Handler().postDelayed({
-//
-//
-//        }, 500)
-         picPath = intent.getStringExtra("picPath")
+        var picPath2 = intent.getStringExtra("picPath")
+        imageName = intent.getStringExtra("imageName")
 
-        /**
-         * 这种方法是通过内存卡的路径进行读取图片，所以的到的图片是拍摄的原图
-         */
-        var fis: FileInputStream? = null
-        try {
-            Log.e("sdPath2", picPath)
-            //把图片转化为字节流
-            fis = FileInputStream(picPath)
-            //把流转化图片
-            val bitmap = BitmapFactory.decodeStream(fis)
-            iv_head.setImageBitmap(bitmap)
+        Glide.with(this@SearchActivity).load(picPath2).apply(RequestOptions.bitmapTransform(CircleCrop())).into(iv_head)
 
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        } finally {
-            try {
-                fis!!.close()//关闭流
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+        //上传文件（图片）时 先睡一会在上传
+        Handler().postDelayed({
 
-        }
+            CompressPhoto(imageName, picPath2)
 
+        }, 500)
 
         iv_toolsbar_back.setOnClickListener {
             finish()
         }
 
-
-        iv_head.setOnClickListener {
-            ll_title.setBackgroundResource(R.drawable.background_title5)
-            ll_failed.visibility = View.VISIBLE
-            ll_camera.visibility = View.VISIBLE
-
-        }
-
-
-        val appDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/image")
+        val appDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/" + Constant.MKDIRNAME)
         if (!appDir.exists()) {
             appDir.mkdirs()
         }
-        sdPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/image"
-        picPath = sdPath + "/" + "temp.png"
-        Log.e("sdPath1", sdPath)
-
 
         ll_camera.setOnClickListener {
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
-            val uri = Uri.fromFile(File(picPath))
+            mUri = Uri.fromFile(File(picPath))
             //为拍摄的图片指定一个存储的路径
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mUri)
             startActivityForResult(cameraIntent, 0)
 
         }
 
-        Glide.with(this@SearchActivity)
-            .load("http://img5.duitang.com/uploads/item/201506/07/20150607110911_kY5cP.jpeg").apply(
-                RequestOptions.bitmapTransform(CircleCrop())
-            ).into(iv_head)
+    }
 
-
-        beans = ArrayList()
-
-        var bean1 = SearchBean("1","赵某某","90%","")
-        var bean2 = SearchBean("2","张某某","90%","")
-        var bean3 = SearchBean("3","王某某","90%","")
-        var bean4 = SearchBean("4","钱某某","90%","")
-        var bean5 = SearchBean("5","赵某某","90%","")
-        var bean6 = SearchBean("6","周某某","90%","")
-        var bean7 = SearchBean("7","吴某某","90%","")
-        var bean8 = SearchBean("8","郑某某","90%","")
-        var bean9 = SearchBean("9","冯某某","90%","")
-        var bean10 = SearchBean("10","鲁某某","90%","")
-
-        beans!!.add(bean1)
-        beans!!.add(bean2)
-        beans!!.add(bean3)
-        beans!!.add(bean4)
-        beans!!.add(bean5)
-        beans!!.add(bean6)
-        beans!!.add(bean7)
-        beans!!.add(bean8)
-        beans!!.add(bean9)
-        beans!!.add(bean10)
-        mAdapter = SearchAdapter(beans!!,SearchActivity@this)
-        gridView.adapter = mAdapter
-
-        gridView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            Log.e("zj","position = "+position)
-
-            startActivity(Intent(this@SearchActivity,ConfirmPersonActivity::class.java))
-        }
+    override fun onResume() {
+        super.onResume()
+        picPath = Constant.SDPATH + "/" + System.currentTimeMillis() + ".jpg"
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        Log.e("zj", "1111111")
-
         if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == 0) {
-                Log.e("zj", "2222")
-
-
-                /**
-                 * 这种方法是通过内存卡的路径进行读取图片，所以的到的图片是拍摄的原图
-                 */
-                var fis: FileInputStream? = null
+                // 刷新在系统相册中显示
                 try {
-                    Log.e("sdPath2", picPath)
-                    //把图片转化为字节流
-                    fis = FileInputStream(picPath)
-                    //把流转化图片
-                    val bitmap = BitmapFactory.decodeStream(fis)
-                    iv_head.setImageBitmap(bitmap)
+                    MediaStore.Images.Media.insertImage(contentResolver,
+                            MediaStore.Images.Media.getBitmap(this@SearchActivity.contentResolver, mUri),
+                            resources.getString(R.string.app_name), "")
 
-                } catch (e: FileNotFoundException) {
+                    val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+                    intent.data = mUri
+                    sendBroadcast(intent)
+                } catch (e: IOException) {
                     e.printStackTrace()
-                } finally {
-                    try {
-                        fis!!.close()//关闭流
-                    } catch (e: IOException) {
-                        e.printStackTrace()
+                }
+                val names = mUri!!.path.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                imageName = names[names.size - 1]
+                if (!imageName.toLowerCase().endsWith(".jpg") && !imageName.toLowerCase().endsWith(".png")) {
+                    imageName = imageName + ".png"
+                }
+
+                Glide.with(this@SearchActivity).load(picPath).apply(RequestOptions.bitmapTransform(CircleCrop())).into(iv_head)
+
+                Handler().postDelayed({
+
+                    CompressPhoto(imageName, picPath)
+
+                }, 500)
+            }
+        }
+    }
+
+
+    /**
+     * 上传头像文件
+     */
+    private fun CompressPhoto(imageName: String, picPath: String) {
+        var mName = ""
+        Luban.with(this@SearchActivity)
+                .load(picPath)
+                .setTargetDir(Constant.SDPATH )
+                //        .ignoreBy(100)                                  // 忽略不压缩图片的大小
+                .setCompressListener(object : OnCompressListener {
+                    override fun onSuccess(file: File?) {
+                        // TODO 压缩成功后调用，返回压缩后的图片文件
+                        Log.e("zj", "file name = " + file!!.name.toString())
+                        mName = file!!.name.toString()
+
+                        netFile(imageName, mName)
                     }
 
-                }
-            }
+                    override fun onError(e: Throwable?) {
+                        // TODO 当压缩过程出现问题时调用
+                        Log.e("zj", "file e = " + e.toString())
+
+                    }
+
+                    override fun onStart() {
+                        // TODO 压缩开始前调用，可以在方法内启动 loading UI
+                        Log.e("zj", "onStart")
+
+                    }
+
+                }).launch()
+
+    }
+
+    private fun netFile(imageName: String, name: String) {
+        val map = HashMap<String, File>()
+        map["imageBase64"] = File(Constant.SDPATH , name)
+
+        netFile(map, this) { response ->
+            Log.e("zj", "netFile sdPath = " + Constant.SDPATH  + ",imageName = " + imageName + ",name = " + name)
+
+            Log.e("zj", "netFile = " + response.data)
+            var file1 = File(Constant.SDPATH , imageName)
+            var file2 = File(Constant.SDPATH , name)
+            file1.delete()
+            file2.delete()
+//
+            var searchBean = Gson().fromJson(response.data, SearchBean::class.java)
+//
+            setData(searchBean)
+        }
+    }
+
+    private fun setData(bean:SearchBean) {
+
+        if (bean.flag == "0"){
+            ll_title.setBackgroundResource(R.drawable.background_title5)
+            ll_failed.visibility = View.VISIBLE
+            ll_camera.visibility = View.VISIBLE
+        }else{
+            ll_title.setBackgroundResource(R.drawable.background_title4)
+            ll_failed.visibility = View.GONE
+            ll_camera.visibility = View.GONE
+        }
+
+        mAdapter = SearchAdapter(bean.ioScore,bean.result, SearchActivity@ this)
+        gridView.adapter = mAdapter
+
+        gridView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            var mIntent = Intent(this@SearchActivity, ConfirmPersonActivity::class.java)
+            mIntent.putExtra("id", bean.result[position].customId)
+            startActivity(mIntent)
         }
     }
 }

@@ -18,11 +18,11 @@ import java.util.ArrayList;
 
 public class LoggingAdapter extends BaseAdapter {
 
-    private ArrayList<LoggingBean> list;
+    private ArrayList<LoggingBean.ResultBean> list;
     private Context context;
 
 
-    public LoggingAdapter(ArrayList<LoggingBean> list,Context context) {
+    public LoggingAdapter(ArrayList<LoggingBean.ResultBean> list,Context context) {
         this.list = list;
         this.context = context;
     }
@@ -69,7 +69,7 @@ public class LoggingAdapter extends BaseAdapter {
         holder.tv_name.setText("" + list.get(position).getName());
         holder.tv_address.setText("" + list.get(position).getAddress());
 
-        Glide.with(context) .load("http://img5.duitang.com/uploads/item/201506/07/20150607110911_kY5cP.jpeg") .apply(RequestOptions.bitmapTransform(new CircleCrop())) .into( holder.iv_head);
+        Glide.with(context) .load(list.get(position).getPortrait()) .apply(RequestOptions.bitmapTransform(new CircleCrop())) .into( holder.iv_head);
 
         return convertView;
     }

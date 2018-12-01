@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -46,30 +47,23 @@ public class NetTools {
         net(map, url, context, myCallBack, msg, true, true);
     }
 
-    public static void net(Map<String, String> map, String url, final Activity context, final MyCallBack myCallBack, final String msg, final boolean isShow, final boolean isDismiss) {
-        String s = new Gson().toJson(map);
-        net(s, url, context, myCallBack, msg, isShow, isDismiss);
-    }
-
-    public static void net(String json, String url, final Activity context, final MyCallBack myCallBack) {
-        net(json, url, context, myCallBack, "正在加载...");
-    }
-
-    public static void net(String json, String url, final Activity context, final MyCallBack myCallBack, final String msg) {
-        net(json, url, context, myCallBack, msg, true, true);
-    }
-
-    public static void net(String json, final String url, final Activity context, final MyCallBack myCallBack, final String msg, final boolean isShow, final boolean isDismiss) {
-        Log.e("zj", "net json = " + json);
+    public static void net(Map<String, String> map, final String url, final Activity context, final MyCallBack myCallBack, final String msg, final boolean isShow, final boolean isDismiss) {
+        Log.e("zj", "net map = " + map.toString());
         Log.e("zj", "net url = " + url);
         Log.e("zj", "net token = " + SPTools.INSTANCE.get(context, Constant.TOKEN, ""));
 
-        RequestCall call = OkHttpUtils.postString().url(url)
-                .addHeader(Constant.TOKEN, (String) SPTools.INSTANCE.get(context, Constant.TOKEN, ""))
-                .addHeader(Constant.TIME, "" + System.currentTimeMillis())
-                .mediaType(MediaType.parse("application/json"))
-                .content(json)
-                .build();
+        PostFormBuilder builder = OkHttpUtils.post().url(url);
+        builder.addHeader(Constant.TOKEN, (String) SPTools.INSTANCE.get(context, Constant.TOKEN, ""));
+        builder.addHeader(Constant.TIME, "" + System.currentTimeMillis());
+
+        for (String key : map.keySet()) {
+            String value = map.get(key);
+            builder.addParams(key, value);
+
+            Log.e("zj", "key = " + key + ";value = " + value);
+        }
+
+        RequestCall call = builder.build();
 
         call.execute(new Callback<BaseBean>() {
             @Override
@@ -85,9 +79,9 @@ public class NetTools {
                 Log.e("cyf7", "response : " + json);
                 JSONObject jsonObject = new JSONObject(json);
                 BaseBean bean = new BaseBean();
-                bean.setCode(jsonObject.optString("code"));
-                bean.setMsg(jsonObject.optString("message"));
-                String json2 = jsonObject.optString("data");
+                bean.setCode(jsonObject.optString("state"));
+                bean.setMsg(jsonObject.optString("msg"));
+                String json2 = jsonObject.optString("result");
                 if (!"".equals(json2) && !"{}".equals(json2) && !"{ }".equals(json2)) {
                     bean.setData(json2);
                 }
@@ -116,7 +110,7 @@ public class NetTools {
                 // 无数据布局隐藏
 //                ((BaseActivity) context).setListToastView(0, "", 0, false);
                 Log.e("zj", "bean = " + baseBean.toString());
-                if ("0".equals(baseBean.getCode())) {
+                if ("100".equals(baseBean.getCode())) {
 
 //                    Log.e("zj", "url = " + url);
 //                    Log.e("zj", "baseBean = " + baseBean.toString());
@@ -132,7 +126,7 @@ public class NetTools {
                     if (isDismiss) {
                         ((BaseActivity) context).dismissProgressDialog();
                     }
-                } else if ("1002".equals(baseBean.getCode())) {
+                } else if ("1002".equals(baseBean.getCode())) {//201
                     // 登录信息失效
                     Toast.makeText(context, baseBean.getMsg(), Toast.LENGTH_SHORT).show();
 
@@ -163,29 +157,28 @@ public class NetTools {
      */
     public static void netFile(Map<String, File> map, final Activity context, final MyCallBack myCallBack) {
 //        PostFormBuilder builder = OkHttpUtils.post().url("http://192.168.13.9:8180/files/upload_file");
-        PostFormBuilder builder = OkHttpUtils.post().url(Urls.file_upload_url);
-        boolean isImgs = true;
-        for (int i = 0; i < map.size(); i++) {
-            if (!FileTools.isImgFile(map.get("file" + i).getName())) {
-                isImgs = false;
-            }
-            builder.addFile("file" + i, map.get("file" + i).getName(), map.get("file" + i));
-            Log.e("zj", "file = " + map.get("file" + i));
-        }
+        PostFormBuilder builder = OkHttpUtils.post().url(Urls.compareN);
+        builder.addHeader(Constant.TOKEN, (String) SPTools.INSTANCE.get(context, Constant.TOKEN, ""));
+        builder.addHeader(Constant.TIME, "" + System.currentTimeMillis());
+        Log.e("zj", "netFile url = " + Urls.compareN);
 
-        builder.addParams("transaction", "1");
-        if (isImgs) {
-            builder.addParams("thumbnail", "1");
-        } else {
-            builder.addParams("thumbnail", "0");
-        }
+        boolean isImgs = true;
+
+//        if (!FileTools.isImgFile(map.get("imageBase64").getName())) {
+//                isImgs = false;
+//            }
+        builder.addFile("imageBase64", map.get("imageBase64").getName(), map.get("imageBase64"));
+
+        Log.e("zj", "imageBase64 = " + map.get("imageBase64"));
 
         RequestCall call = builder.build();
+        call.connTimeOut(10000000L);
+        call.readTimeOut(10000000L);
         call.execute(new Callback<BaseBean>() {
             @Override
             public void onBefore(Request request, int id) {
                 if (context != null) {
-                    ((BaseActivity) context).showProgressDialog("正在上传...");
+                    ((BaseActivity) context).showProgressDialog("正在获取...");
                 }
             }
 
@@ -195,14 +188,10 @@ public class NetTools {
                 Log.e("cyf7", "response : " + json);
                 JSONObject jsonObject = new JSONObject(json);
                 BaseBean bean = new BaseBean();
-                bean.setCode(jsonObject.optString("code"));
+                bean.setCode(jsonObject.optString("state"));
                 bean.setMsg(jsonObject.optString("msg"));
                 // bean.setData(jsonObject.optString("data"));
-                bean.setData(jsonObject.optString("data")
-                        .replace("originalName", "originalFileName")
-                        .replace("filePath", "accessPath")
-                        .replace("fileSize", "size")
-                        .replace("thumbPath", "thumbnailPath"));
+                bean.setData(jsonObject.optString("result"));
                 return bean;
             }
 
@@ -223,12 +212,12 @@ public class NetTools {
 
             @Override
             public void onResponse(BaseBean baseBean, int id) {
-                if ("0".equals(baseBean.getCode())) {
+                if ("100".equals(baseBean.getCode())) {
                     myCallBack.getData(baseBean);
                 } else {
-                    ((BaseActivity) context).dismissProgressDialog();
                     Toast.makeText(context, baseBean.getMsg(), Toast.LENGTH_SHORT).show();
                 }
+                ((BaseActivity) context).dismissProgressDialog();
             }
 
         });

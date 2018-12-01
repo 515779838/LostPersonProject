@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.lostpersonproject.R;
 import com.android.lostpersonproject.bean.SearchBean;
+import com.android.lostpersonproject.tool.StrTools;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
@@ -18,13 +19,14 @@ import java.util.ArrayList;
 
 public class SearchAdapter extends BaseAdapter {
 
-    private ArrayList<SearchBean> list;
+    private ArrayList<SearchBean.ResultBean> list;
     private Context context;
+    private String score;
 
-
-    public SearchAdapter(ArrayList<SearchBean> list, Context context) {
+    public SearchAdapter(String score,ArrayList<SearchBean.ResultBean> list, Context context) {
         this.list = list;
         this.context = context;
+        this.score = score;
     }
 
     @Override
@@ -59,16 +61,20 @@ public class SearchAdapter extends BaseAdapter {
         }
 
         holder.tv_name.setText("" + list.get(position).getName());
-        holder.tv_like.setText("" + list.get(position).getLike());
+        if (Double.parseDouble(list.get(position).getScore())>Double.parseDouble(score)){
+            holder.tv_like.setTextColor(context.getResources().getColor(R.color.text2));
+        }else {
+            holder.tv_like.setTextColor(context.getResources().getColor(R.color.bg_text));
+        }
+        holder.tv_like.setText("" + list.get(position).getScore()+"%");
 
-        Glide.with(context).load("http://img5.duitang.com/uploads/item/201506/07/20150607110911_kY5cP.jpeg").apply(RequestOptions.bitmapTransform(new CircleCrop())).into(holder.iv_head);
+        Glide.with(context).load(list.get(position).getPortrait()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(holder.iv_head);
 
         if (position / 2 % 2 == 0) {
             holder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.white));
         }else{
             holder.ll_item.setBackgroundColor(context.getResources().getColor(R.color.hint2));
         }
-
         return convertView;
     }
 
@@ -77,6 +83,7 @@ public class SearchAdapter extends BaseAdapter {
         public TextView tv_name, tv_like;
         public LinearLayout ll_item;
     }
+
 
 }
 

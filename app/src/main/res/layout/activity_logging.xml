@@ -118,6 +118,12 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
+            <include
+                android:id="@+id/view_no_data"
+                layout="@layout/layout_no_data"
+                android:visibility="gone" />
+
+
             <ListView
                     android:id="@+id/listView"
                     android:layout_width="match_parent"

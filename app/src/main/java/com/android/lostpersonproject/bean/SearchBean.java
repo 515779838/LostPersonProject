@@ -1,63 +1,95 @@
 package com.android.lostpersonproject.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchBean implements Serializable {
 
-    private String id;
-    private String name;
-    private String like;
-    private String url;
+    private String ioScore;
+    private String flag;
+    private ArrayList<ResultBean> result;
 
-    public SearchBean() {
+    public String getIoScore() {
+        return ioScore;
     }
 
-    public SearchBean(String id, String name, String like, String url) {
-        this.id = id;
-        this.name = name;
-        this.like = like;
-        this.url = url;
+    public void setIoScore(String ioScore) {
+        this.ioScore = ioScore;
     }
 
-    public String getId() {
-        return id;
+    public String getFlag() {
+        return flag;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
-    public String getName() {
-        return name;
+    public ArrayList<ResultBean> getResult() {
+        return result;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setResult(ArrayList<ResultBean> result) {
+        this.result = result;
     }
 
-    public String getLike() {
-        return like;
-    }
+    public static class ResultBean implements Serializable{
 
-    public void setLike(String like) {
-        this.like = like;
-    }
+        private String customId;
+        private String name;
+        private String score;
+        private String portrait;
 
-    public String getUrl() {
-        return url;
-    }
+        public String getCustomId() {
+            return customId;
+        }
 
-    public void setUrl(String url) {
-        this.url = url;
+        public void setCustomId(String customId) {
+            this.customId = customId;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getScore() {
+            return score;
+        }
+
+        public void setScore(String score) {
+            this.score = score;
+        }
+
+        public String getPortrait() {
+            return portrait;
+        }
+
+        public void setPortrait(String portrait) {
+            this.portrait = portrait;
+        }
+
+        @Override
+        public String toString() {
+            return "ResultBean{" +
+                    "customId='" + customId + '\'' +
+                    ", name='" + name + '\'' +
+                    ", score='" + score + '\'' +
+                    ", portrait='" + portrait + '\'' +
+                    '}';
+        }
     }
 
     @Override
     public String toString() {
         return "SearchBean{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", like='" + like + '\'' +
-                ", url='" + url + '\'' +
+                "ioScore='" + ioScore + '\'' +
+                ", flag='" + flag + '\'' +
+                ", result=" + result +
                 '}';
     }
 }

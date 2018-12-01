@@ -7,21 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.android.lostpersonproject.R;
+import com.android.lostpersonproject.bean.PersonDetailBean;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GalleryAdapter extends
         RecyclerView.Adapter<GalleryAdapter.ViewHolder>
 {
     private LayoutInflater mInflater;
-    private List<Integer> mDatas;
+    private ArrayList<PersonDetailBean.PhotosBean> mDatas;
     private Context context;
 
 
-    public GalleryAdapter(Context context, List<Integer> datats)
+    public GalleryAdapter(Context context, ArrayList<PersonDetailBean.PhotosBean> datats)
     {
         mInflater = LayoutInflater.from(context);
         mDatas = datats;
@@ -66,7 +68,7 @@ public class GalleryAdapter extends
     public void onBindViewHolder(final ViewHolder viewHolder, final int i)
     {
 
-        Glide.with(context) .load("http://img5.duitang.com/uploads/item/201506/07/20150607110911_kY5cP.jpeg") .apply(RequestOptions.bitmapTransform(new CircleCrop())) .into( viewHolder.mImg);
+        Glide.with(context) .load(mDatas.get(i).getPortrait()) .apply(RequestOptions.bitmapTransform(new CircleCrop())) .into( viewHolder.mImg);
 
 
         viewHolder.mImg.setOnClickListener(new View.OnClickListener() {

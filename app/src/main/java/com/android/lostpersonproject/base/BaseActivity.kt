@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.android.lostpersonproject.R
+import org.jetbrains.anko.imageResource
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -147,6 +148,70 @@ open class BaseActivity : AppCompatActivity() {
         return (dpValue * scale + 0.5f).toInt()
     }
 
+    /**
+     * size 当前页面总共获取数据条数
+     * msg 无数据提示语
+     * resId 无数据提示图
+     */
+    fun setListToastView(size: Int, msg: String, resId: Int) {
+        setListToastView(size, msg, resId, true)
+    }
+
+    /**
+     * size 当前页面总共获取数据条数
+     * msg 无数据提示语
+     * resId 无数据提示图
+     */
+    fun setListToastView(size: Int, msg: String, resId: Int, isShow: Boolean) {
+        if (isShow) {
+            if (findViewById<View>(R.id.view_no_data) != null) {
+                if (size == 0) {
+                    // toast("暂无数据")
+                    findViewById<View>(R.id.view_no_data).visibility = View.VISIBLE
+                    findViewById<View>(R.id.view_no_data).setOnClickListener { }
+                    findViewById<View>(R.id.view_no_data).findViewById<TextView>(R.id.textView).text = msg
+                    findViewById<View>(R.id.view_no_data).findViewById<ImageView>(R.id.imageView).imageResource = resId
+                } else {
+                    if (pageIndex != 1) {
+//                        toast("无更多数据")
+                    }
+                    findViewById<View>(R.id.view_no_data).visibility = View.GONE
+                    findViewById<View>(R.id.view_no_data).findViewById<TextView>(R.id.textView).text = ""
+                    findViewById<View>(R.id.view_no_data).findViewById<ImageView>(R.id.imageView).imageResource = android.R.color.transparent
+                }
+            }
+        } else {
+            if (findViewById<View>(R.id.view_no_data) != null) {
+                findViewById<View>(R.id.view_no_data).visibility = View.GONE
+                findViewById<View>(R.id.view_no_data).findViewById<TextView>(R.id.textView).text = ""
+                findViewById<View>(R.id.view_no_data).findViewById<ImageView>(R.id.imageView).imageResource = android.R.color.transparent
+            }
+        }
+    }
+
+    fun formateRate(rateStr: String): String {
+        if (rateStr.indexOf(".") != -1) {
+            //获取小数点的位置
+            var num = 0
+            num = rateStr.indexOf(".")
+
+            //获取小数点后面的数字 是否有两位 不足两位补足两位
+            val dianAfter = rateStr.substring(0, num + 1)
+            var afterData = rateStr.replace(dianAfter, "")
+            if (afterData.length < 2) {
+                afterData = afterData + "0"
+            } else {
+                afterData = afterData
+            }
+            return rateStr.substring(0, num) + "." + afterData.substring(0, 2)
+        } else {
+            return if (rateStr === "1") {
+                "100"
+            } else {
+                rateStr
+            }
+        }
+    }
 
 
 }

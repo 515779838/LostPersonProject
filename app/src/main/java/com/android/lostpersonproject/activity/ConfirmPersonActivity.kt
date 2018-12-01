@@ -1,5 +1,6 @@
 package com.android.lostpersonproject.activity
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,11 +13,16 @@ import android.widget.LinearLayout
 import com.android.lostpersonproject.R
 import com.android.lostpersonproject.adapter.GalleryAdapter
 import com.android.lostpersonproject.base.BaseActivity
+import com.android.lostpersonproject.bean.PersonDetailBean
+import com.android.lostpersonproject.tool.NetTools
+import com.android.lostpersonproject.url.Urls
 import com.android.lostpersonproject.view.CustomDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_person_detail.*
+import org.jetbrains.anko.toast
 import java.util.*
 
 /**
@@ -39,50 +45,101 @@ class ConfirmPersonActivity : BaseActivity() {
         iv_toolsbar_back.setOnClickListener {
             finish()
         }
+        var id = intent.getStringExtra("id")
 
         ll_confirm.visibility = View.VISIBLE
 
         ll_confirm.setOnClickListener {
-            finish()
+
+            var builder = AlertDialog.Builder(this@ConfirmPersonActivity);
+
+            builder.setTitle("提示");
+            builder.setMessage("确定找到此人？");
+
+            builder.setPositiveButton("确定") { dialog, which ->
+                net_confirm(id)
+                dialog.dismiss()
+                finish()
+            }
+
+            builder.setNegativeButton("取消") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            builder.show()
+
         }
 
-        setData()
+
+        net_populationList(id)
 
     }
+    private fun net_populationList(baseId: String) {
+        val map = hashMapOf<String, String>()
 
-    private fun setData() {
+        map["baesId"] = baseId;
+        NetTools.net(map, Urls().personneletails, this) { response ->
+            Log.e("zj", "personneletails = " + response.data)
+
+            var bean = Gson().fromJson(response.data, PersonDetailBean::class.java)
+            setData(bean)
+        }
+    }
+
+    private fun setData(bean: PersonDetailBean) {
 
         Glide.with(this@ConfirmPersonActivity)
-                .load("http://img5.duitang.com/uploads/item/201506/07/20150607110911_kY5cP.jpeg").apply(
+                .load(bean.portrait_nav).apply(
                         RequestOptions.bitmapTransform(CircleCrop())
                 ).into(iv_head)
 
-        mDatas = ArrayList(
-                Arrays.asList(
-                        R.mipmap.ic_launcher,
-                        R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
-                        R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher
-                )
-        )
+        tv_name.text = bean.name
+        tv_phone.text = bean.mePhone
+        tv_cardNum.text = bean.cardId
+        tv_address.text = bean.address
+        tv_jhr1.text = bean.guardianOne
+        tv_relationship.text = bean.relationOne
+        tv_cardNum1.text = bean.guardianOneCardId
+        tv_address1.text = bean.guardianOneAddress
+        tv_phone1.text = bean.guardianOneTel
+        et_remark.setText(bean.remarks)
+
+        tv_jhr2.text = bean.guardianTwo
+        tv_relationship2.text = bean.relationTwo
+        tv_cardNum2.text = bean.guardianTwoCardId
+        tv_address2.text = bean.guardianTwoAddress
+        tv_phone2.text = bean.guardianTwoTel
+
+        tv_policeStationId.text = bean.policeStationId
+        tv_localPoliceStationId.text = bean.localPoliceStationId
+        tv_responsibilityAreaId.text = bean.responsibilityAreaId
+
+        if (et_remark.text.isNotEmpty()) {
+            et_remark.setSelection(et_remark.text.length)
+        }
 
         ll_call.setOnClickListener {
-            var mIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "17386843212"));//跳转到拨号界面，同时传递电话号码
+            var mIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.guardianOneTel));//跳转到拨号界面，同时传递电话号码
+            startActivity(mIntent)
+        }
+
+        ll_call2.setOnClickListener {
+            var mIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.guardianTwoTel));
             startActivity(mIntent)
         }
 
         //设置布局管理器
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerview_horizontal.setLayoutManager(linearLayoutManager)
+        recyclerview_horizontal.layoutManager = linearLayoutManager
         //设置适配器
-        mAdapter = GalleryAdapter(this, mDatas)
+        mAdapter = GalleryAdapter(this, bean.photos)
         recyclerview_horizontal.setAdapter(mAdapter)
-        mAdapter = GalleryAdapter(PersonDetailActivity@ this, mDatas)
         recyclerview_horizontal.adapter = mAdapter
 
         mAdapter!!.setOnItemClick { id, position ->
 
-            Log.e("zj", "position = " + position)
+            Log.e("zj", "position = $position")
             val view = LayoutInflater.from(this).inflate(R.layout.view_colse, null)
             var dialog: CustomDialog? = null
             builder = CustomDialog.Builder(this@ConfirmPersonActivity)
@@ -93,9 +150,9 @@ class ConfirmPersonActivity : BaseActivity() {
             var ll_close = view.findViewById<View>(R.id.ll_close) as LinearLayout
 
             var requestOptions = RequestOptions()
-            requestOptions.error(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher)
+            requestOptions.error(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_default)
             Glide.with(this@ConfirmPersonActivity)
-                    .load("http://img5.duitang.com/uploads/item/201506/07/20150607110911_kY5cP.jpeg").apply(
+                    .load(bean.photos[position].portrait).apply(
                             requestOptions
                     ).into(image)
 
@@ -106,8 +163,18 @@ class ConfirmPersonActivity : BaseActivity() {
 
             dialog = builder!!.create() as CustomDialog
             dialog!!.show()
+        }
+    }
 
+    private fun net_confirm(baseId: String) {
+        val map = hashMapOf<String, String>()
 
+        map["baesId"] = baseId;
+        map["isState"] = "0" //int 0失踪人员 1已找到
+        map["remarks"] = et_remark.text.toString()
+
+        NetTools.net(map, Urls.confirm, this) { response ->
+            toast(""+response.msg)
         }
     }
 }
