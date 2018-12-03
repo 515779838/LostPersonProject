@@ -133,6 +133,11 @@ class PersonDetailActivity : BaseActivity() {
             var mIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.guardianTwoTel));
             startActivity(mIntent)
         }
+        if (bean!=null &&bean.photos.isEmpty()){
+            recyclerview_horizontal.visibility = View.GONE
+        }else{
+            recyclerview_horizontal.visibility = View.VISIBLE
+        }
 
         //设置布局管理器
         val linearLayoutManager = LinearLayoutManager(this)

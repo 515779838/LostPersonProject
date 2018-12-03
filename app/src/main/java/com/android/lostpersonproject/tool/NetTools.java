@@ -1,7 +1,10 @@
 package com.android.lostpersonproject.tool;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -52,6 +55,11 @@ public class NetTools {
         Log.e("zj", "net url = " + url);
         Log.e("zj", "net token = " + SPTools.INSTANCE.get(context, Constant.TOKEN, ""));
 
+        if(!isNetworkAvailable(context)){
+            Toast.makeText(context,"网络不可用，请检查网络连接",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         PostFormBuilder builder = OkHttpUtils.post().url(url);
         builder.addHeader(Constant.TOKEN, (String) SPTools.INSTANCE.get(context, Constant.TOKEN, ""));
         builder.addHeader(Constant.TIME, "" + System.currentTimeMillis());
@@ -100,7 +108,7 @@ public class NetTools {
                     Toast.makeText(context, "服务器连接超时", Toast.LENGTH_SHORT).show();
                 } else {
                     // 其它异常
-                    Log.e("Exception gson：", e.toString());
+                    Log.e("Exception gson：", e.getClass().getName());
                 }
                 ((BaseActivity) context).dismissProgressDialog();
             }
@@ -126,7 +134,7 @@ public class NetTools {
                     if (isDismiss) {
                         ((BaseActivity) context).dismissProgressDialog();
                     }
-                } else if ("1002".equals(baseBean.getCode())) {//201
+                } else if ("201".equals(baseBean.getCode())) {//201
                     // 登录信息失效
                     Toast.makeText(context, baseBean.getMsg(), Toast.LENGTH_SHORT).show();
 
@@ -212,12 +220,15 @@ public class NetTools {
 
             @Override
             public void onResponse(BaseBean baseBean, int id) {
+                ((BaseActivity) context).dismissProgressDialog();
+                Log.e("zj：", "onResponse");
+
                 if ("100".equals(baseBean.getCode())) {
                     myCallBack.getData(baseBean);
                 } else {
                     Toast.makeText(context, baseBean.getMsg(), Toast.LENGTH_SHORT).show();
                 }
-                ((BaseActivity) context).dismissProgressDialog();
+
             }
 
         });
@@ -225,6 +236,24 @@ public class NetTools {
 
     public interface MyCallBack {
         void getData(BaseBean response);
+    }
+
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity == null) {
+            return false;
+        } else {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null) {
+                for (int i = 0; i < info.length; i++) {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

@@ -59,6 +59,7 @@ open class BaseActivity : AppCompatActivity() {
         try {
             if (progressDialog == null) {
                 progressDialog = ProgressDialog(this)
+//                progressDialog!!.setIndeterminateDrawable(resources.getDrawable(R.drawable.progress_bgcolor))
             }
             if (progressDialog != null && !progressDialog!!.isShowing) {
                 progressDialog!!.setCanceledOnTouchOutside(false)
@@ -188,30 +189,4 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
     }
-
-    fun formateRate(rateStr: String): String {
-        if (rateStr.indexOf(".") != -1) {
-            //获取小数点的位置
-            var num = 0
-            num = rateStr.indexOf(".")
-
-            //获取小数点后面的数字 是否有两位 不足两位补足两位
-            val dianAfter = rateStr.substring(0, num + 1)
-            var afterData = rateStr.replace(dianAfter, "")
-            if (afterData.length < 2) {
-                afterData = afterData + "0"
-            } else {
-                afterData = afterData
-            }
-            return rateStr.substring(0, num) + "." + afterData.substring(0, 2)
-        } else {
-            return if (rateStr === "1") {
-                "100"
-            } else {
-                rateStr
-            }
-        }
-    }
-
-
 }

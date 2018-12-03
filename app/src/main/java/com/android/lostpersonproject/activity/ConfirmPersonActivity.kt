@@ -128,6 +128,12 @@ class ConfirmPersonActivity : BaseActivity() {
             startActivity(mIntent)
         }
 
+        if (bean!=null &&bean.photos.isEmpty()){
+            recyclerview_horizontal.visibility = View.GONE
+        }else{
+            recyclerview_horizontal.visibility = View.VISIBLE
+        }
+
         //设置布局管理器
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -170,7 +176,7 @@ class ConfirmPersonActivity : BaseActivity() {
         val map = hashMapOf<String, String>()
 
         map["baesId"] = baseId;
-        map["isState"] = "0" //int 0失踪人员 1已找到
+        map["isState"] = "1" //int 0失踪人员 1已找到
         map["remarks"] = et_remark.text.toString()
 
         NetTools.net(map, Urls.confirm, this) { response ->

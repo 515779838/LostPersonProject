@@ -13,6 +13,7 @@ import com.android.lostpersonproject.url.Urls
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.toast
+import java.io.File
 
 /**
  * 登录
@@ -22,6 +23,10 @@ class LoginActivity : BaseActivity() , View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        et_name.setText(SPTools[this@LoginActivity,Constant.USERNAME,""].toString())
+        if (!et_name.text.isEmpty()){
+            et_name.setSelection(et_name.text.length)
+        }
         btn_login.setOnClickListener(this)
 
     }
@@ -50,6 +55,7 @@ class LoginActivity : BaseActivity() , View.OnClickListener {
             var userBean = Gson().fromJson(response.data, UserBean::class.java)
 
             SPTools.put(this@LoginActivity, Constant.TOKEN, ""+userBean.token)
+            SPTools.put(this@LoginActivity, Constant.USERNAME, ""+et_name.text.toString())
 
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             intent.putExtra("userBean",userBean)

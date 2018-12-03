@@ -70,7 +70,6 @@ public class GalleryAdapter extends
 
         Glide.with(context) .load(mDatas.get(i).getPortrait()) .apply(RequestOptions.bitmapTransform(new CircleCrop())) .into( viewHolder.mImg);
 
-
         viewHolder.mImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +89,6 @@ public class GalleryAdapter extends
     public void setOnItemClick( OnItemClick onItemClick) {
         this.onItemClick = onItemClick;
     }
-
 
 }
 

@@ -111,11 +111,7 @@ class SearchActivity : BaseActivity() {
 
                 Glide.with(this@SearchActivity).load(picPath).apply(RequestOptions.bitmapTransform(CircleCrop())).into(iv_head)
 
-                Handler().postDelayed({
-
-                    CompressPhoto(imageName, picPath)
-
-                }, 500)
+                CompressPhoto(imageName, picPath)
             }
         }
     }
@@ -126,9 +122,10 @@ class SearchActivity : BaseActivity() {
      */
     private fun CompressPhoto(imageName: String, picPath: String) {
         var mName = ""
+
         Luban.with(this@SearchActivity)
                 .load(picPath)
-                .setTargetDir(Constant.SDPATH )
+                .setTargetDir(Constant.SDPATH)
                 //        .ignoreBy(100)                                  // 忽略不压缩图片的大小
                 .setCompressListener(object : OnCompressListener {
                     override fun onSuccess(file: File?) {
@@ -147,8 +144,6 @@ class SearchActivity : BaseActivity() {
 
                     override fun onStart() {
                         // TODO 压缩开始前调用，可以在方法内启动 loading UI
-                        Log.e("zj", "onStart")
-
                     }
 
                 }).launch()
