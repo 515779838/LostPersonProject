@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.lostpersonproject">
+    package="com.yiqikeji.lostpersonproject">
 
     <!-- Required -->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -16,53 +16,54 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.hardware.camera.autofocus" />
 
+    <uses-permission android:name="ycgis.pstore.permission.APP" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.android.lostpersonproject.activity.WelcomeActivity"
+            android:name="com.yiqikeji.lostpersonproject.activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/StartTheme"
             android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".base.BaseActivity"
+            android:name="com.yiqikeji.lostpersonproject.base.BaseActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.yiqikeji.lostpersonproject.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <activity
-            android:name=".activity.LoggingActivity"
+            android:name="com.yiqikeji.lostpersonproject.activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".activity.SearchActivity"
+            android:name="com.yiqikeji.lostpersonproject.activity.LoggingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.yiqikeji.lostpersonproject.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".activity.PersonDetailActivity"
+            android:name="com.yiqikeji.lostpersonproject.activity.PersonDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.ConfirmPersonActivity"
+            android:name="com.yiqikeji.lostpersonproject.activity.ConfirmPersonActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>
