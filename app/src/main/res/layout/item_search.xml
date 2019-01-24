@@ -17,7 +17,7 @@
         android:gravity="center"
         android:lines="1"
         android:ellipsize="end"
-        android:text="赵某某"
+        android:text=""
         android:textColor="@color/bg_text"
         android:textSize="14sp" />
 
@@ -28,7 +28,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:lines="1"
-        android:text="90.0%"
+        android:text=""
         android:textColor="@color/bg_text"
         android:textSize="12sp" />
 

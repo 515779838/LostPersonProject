@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.yiqikeji.lostpersonproject.activity.PersonDetailActivity">
+    tools:context="com.yiqikeji.fsgaryzsrxbd.activity.PersonDetailActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.yiqikeji.lostpersonproject.view.VerticalScrollView
+                <com.yiqikeji.fsgaryzsrxbd.view.VerticalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scrollbars="none">
@@ -116,7 +116,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
-                                android:text="1800388XXXX"
+                                android:text=""
                                 android:textColor="@color/text2" />
                         </LinearLayout>
 
@@ -140,7 +140,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
-                                android:text="22010219771222XXXX"
+                                android:text=""
                                 android:textColor="@color/bg_text" />
                         </LinearLayout>
 
@@ -164,7 +164,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
-                                android:text="辽宁省抚顺市XX路XX街XX号"
+                                android:text=""
                                 android:textColor="@color/text2" />
                         </LinearLayout>
 
@@ -546,6 +546,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginTop="12dp"
+                            android:paddingBottom="4dp"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="horizontal">
@@ -554,11 +555,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
+
                                 android:text="备注："
                                 android:textColor="@color/bg_text" />
 
                             <EditText
                                 android:id="@+id/et_remark"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
@@ -581,7 +585,7 @@
                         </android.support.v7.widget.RecyclerView>
 
                     </LinearLayout>
-                </com.yiqikeji.lostpersonproject.view.VerticalScrollView>
+                </com.yiqikeji.fsgaryzsrxbd.view.VerticalScrollView>
 
 
             </LinearLayout>
